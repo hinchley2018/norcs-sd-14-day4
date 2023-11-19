@@ -1,23 +1,27 @@
 let numbers = [4, 6, 10]
 let total = 0
 //Sum up the numbers using for loop
-for (let index = 0; index < numbers.length; index++) {
-    console.log(numbers[index]);
-    total = total + numbers[index]
+//Setup
+for(let i = 0; i < numbers.length; i++){
+    //meat and potatoes
+    //add the element at that index to the total
+    total = total + numbers[i]
 }
 console.log(total)
 
 //Sum up the numbers using for each
 console.log("output from forEach")
+//reset back to zero so we know total is correct
 total = 0
-numbers.forEach(function(e){
-    console.log(e)
-    total = total + e
+numbers.forEach(function(elem){
+    console.log("log elem in forEach", elem)
+    total = total + elem
 })
-console.log(total)
+
+console.log("foreach total", total)
 
 
-
+//explain object
 let flights = [
     {
         seatsAvailable: ["26A", "26D", "24B"],
@@ -80,29 +84,75 @@ let flights = [
 //Sum up the flights prices
 //go through list of flight objects and add up the prices
 let flightTotal = 0;
-flights.forEach(function(flight){
-    console.log(flight)
-    flightTotal = flightTotal + flight.price
+//recipe for a foreach
+//function - keyword to define recipe
+//arg - data passed to function/ in the funciton def its the arg i'm using
+
+function myForEach(array, cb_fn){
     
+    for (let index = 0; index < array.length; index++) {
+        const element = array[index];
+        cb_fn(element)
+    }
+}
+// debugger
+myForEach(flights, function(f){
+    
+    flightTotal = flightTotal + f.price
 })
+
+// flights.forEach(function(f){
+//     //just remember its an object
+//     debugger
+//     flightTotal = flightTotal + f.price
+// })
+// flightTotal = 0
+// //() => {} function(){}
+// flights.forEach((f) => {flightTotal = flightTotal + f.price})
 console.log(flightTotal)
 
+let onlyDestination = []
+//list out only destination with for loop
+for(let i = 0 ; i < flights.length; i++){
+    onlyDestination.push(flights[i].destination)
+}
+console.log("forloop", onlyDestination )
 //list out destination with .forEach
-flights.forEach(function(flight){
-    console.log(flight.destination)
-})
+onlyDestination = flights.map((f) => {return f.destination})
+console.log("foreach", onlyDestination )
+
+//changing shape form list of objects to a list of strings
+let flightNumbers = flights.map((f) => {return f.flightNumber})
+console.log(flightNumbers)
 
 
+function myMap(array, cb_fn){
+    let a2 = []
+    for (let index = 0; index < array.length; index++) {
+        const element = array[index];
+        cb_fn(element)
+    }
+    return a2
+}
+//transform in a different way
+let numbersToDouble = [4, 6, 10]
+//double the numbers
+let doubled = numbersToDouble.map((n) => n**2)
+console.log(doubled)
+
+let numbersToFilter = [1,2,3]
+numbersToFilter.filter((n) => n > 2)
+
+let emails =["jon@gmail.com", "jon@live.com", "jon@yahoo.com", "jon@hotmail.com", "jon@junk.com"]
+
+let gmails = emails.filter((e) => e.includes("gmail.com"))
 
 //Return a list of flight destinations to make it easy to display
 let destinations = []
-for (let index = 0; index < flights.length; index++) {
-    destinations.push(flights[index].destination);
-    
-}
+
 console.log(destinations)
 //using map to return destinations
-let d2 = flights.map(flight => flight.destination)
+let d2 = null
 console.log("output from map", d2)
 
 let flightsUl = document.querySelector("#flights")
@@ -118,19 +168,14 @@ let products = [
         brand: "blue ribbon"
     }
 ]
-
+//filtered results using for loop to filter
 let filteredResults = []
 let selectedBrand = "blue ribbon"
-for (let index = 0; index < products.length; index++) {
-    
-    if(products[index].brand === selectedBrand){
-        filteredResults.push(products[index])
-    }
-}
-console.log("forloop, filter", filteredResults)
 
-let f2 = products.filter(p => p.brand === selectedBrand)
-console.log("filter", f2)
+console.log("for loop to filter", filteredResults)
+
+let f2 = products.filter((p) => p.brand === "pedigree")
+console.log("using .filter", f2)
 
 
 //How would we exlude flights more expensive than $300?
